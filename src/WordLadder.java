@@ -22,12 +22,7 @@ public class WordLadder {
 		}
 		
 		final Tree tree = createTree(start, new HashSet<>(dict));
-		int minimumLength = Integer.MAX_VALUE;
-		for(final Tree child : ) {
-			
-		}
-		
-		return 0;
+		return tree.shortestDistance(end);
 	}
 	
 	public static Tree createTree(
@@ -70,12 +65,18 @@ public class WordLadder {
 			this.subtrees = new ArrayList<Tree>(subtrees);
 		}
 		
-		public String getValue() {
-			return this.value;
-		}
-		
-		public List<Tree> getSubtrees() {
-			return new ArrayList<Tree>(this.subtrees);
+		public int shortestDistance(final String target) {
+			
+			if(target.equals(this.value)) {
+				return 0;
+			}
+			
+			int min = Integer.MAX_VALUE; 
+			for (final Tree child : subtrees) {
+				min = Math.min(min, child.shortestDistance(target));
+			}
+			
+			return min;
 		}
 	}
 }
