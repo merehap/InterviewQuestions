@@ -31,6 +31,19 @@ public class Trie {
 		return trie;
 	}
 	
+	public boolean startsWith(final String prefix) {
+		Trie node = this;
+		for(int index = 1; index < prefix.length(); index++) {
+			if(!node.children.containsKey(prefix.substring(0, index))) {
+				return false;
+			}
+			
+			node = node.children.get(prefix.substring(0));
+		}
+		
+		return true;
+	}
+	
 	private Trie(final String value, final Map<String, Trie> children) {
 		this.value = value;
 		this.children = children;
