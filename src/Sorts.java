@@ -39,4 +39,21 @@ public class Sorts {
 		
 		return result;
 	}
+	
+	public static <T extends Comparable<T>> List<T> insertionSort(List<T> input) {
+		for(int index = 0; index < input.size(); index++) {
+			int min = Integer.MAX_VALUE;
+			int minIndex = 0;
+			for(int source = index; source < input.size(); source++) {
+				if(input.get(source).compareTo(min) < 0) {
+					min = input.get(source);
+					minIndex = source;
+				}
+			}
+			
+			int temp = input.get(index);
+			input.set(index, input.get(source));
+			input.set(source, temp);
+		}
+	}
 }
