@@ -18,7 +18,7 @@ public class TreeTraversals {
 		return result;
 	}
 	
-	public static <T> List<T> iterative_preorder(Tree<T> tree) {
+	public static <T> List<T> iterativePreorder(Tree<T> tree) {
 		
 		if(tree == null) {
 			return new ArrayList<>();
@@ -53,6 +53,26 @@ public class TreeTraversals {
 		return result;
 	}
 	
+	public static <T> List<T> iterativeInorderTraversal(Tree<T> tree) {
+		List<T> result = new ArrayList<>();
+		
+		Stack<Tree<T>> stack = new Stack<>();
+		
+		Tree<T> root = tree;
+		while(stack.isEmpty() || root != null) {
+			
+			if(root != null) {
+				stack.push(root);
+				root = root.left;
+			} else {
+				Tree<T> temp = stack.pop();
+				root = temp.right;
+				result.add(temp.value);
+			}
+		}
+		
+		return result;
+	}
 	
 	public static class Tree<T> {
 		private final Tree<T> left;
