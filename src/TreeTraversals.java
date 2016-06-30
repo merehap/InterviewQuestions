@@ -74,6 +74,38 @@ public class TreeTraversals {
 		return result;
 	}
 	
+	public static <T> List<T> levelOrderTraversal(Tree<T> tree) {
+		List<T> result = new ArrayList<>();
+		
+		List<Tree<T>> currentLevel = new ArrayList<>();
+		currentLevel.add(tree);
+		
+		while(!currentLevel.isEmpty()) {
+			List<Tree<T>> nextLevel = new ArrayList<>();
+			for(final Tree<T> node : currentLevel) {
+				result.add(node.value);
+				nextLevel.addAll(getChildren(node));
+			}
+			
+			currentLevel = nextLevel;
+		}
+		
+		return result;
+	}
+	
+	private static <T> List<Tree<T>> getChildren(Tree<T> tree) {
+		List<Tree<T>> children = new ArrayList<>();
+		if(tree.left != null) {
+			children.add(tree.left);
+		}
+		
+		if(tree.right != null) {
+			children.add(tree.right);
+		}
+		
+		return children;
+	}
+	
 	public static class Tree<T> {
 		private final Tree<T> left;
 		private final T value;
