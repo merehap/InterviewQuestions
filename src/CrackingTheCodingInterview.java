@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Stack;
 
 
 public class CrackingTheCodingInterview {
@@ -125,5 +126,18 @@ public class CrackingTheCodingInterview {
 		
 		
 		return null;
+	}
+	
+	public static <T> T getKthFromLast(LinkedList<T> input, int k) {
+		Stack<T> stack = new Stack<T>();
+		while(input.peek() != null) {
+			stack.push(input.removeFirst());
+		}
+		
+		for(int index = 0; index < k; index++) {
+			stack.pop();
+		}
+		
+		return stack.peek();
 	}
 }
