@@ -123,6 +123,22 @@ public class TreeTraversals {
 				right);
 	}
 	
+    public static boolean isHeightBalanced(Tree<T> tree) {
+        if(Math.abs(depth(tree.left), depth(tree.right)) > 1) {
+            return false;
+        }
+
+        return isHeightBalanced(tree.left) && isHeightBalanced(tree.right);
+    }
+
+    public static int depth(Tree<T> tree) {
+        if(!tree.hasChildren()) {
+            return 1;
+        }
+
+        return 1 + Math.max(depth(tree.left), depth(tree.right));
+    }
+
 	public static class Tree<T> {
 		private final Tree<T> left;
 		private final T value;
