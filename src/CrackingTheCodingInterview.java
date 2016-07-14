@@ -1,13 +1,64 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 
 public class CrackingTheCodingInterview {
+	
+	public static boolean onlyUniqueCharacters(String text) {
+		Set<Character> characters = new HashSet<>();
+		for(char c : text.toCharArray()) {
+			characters.add(c);
+		}
+		
+		return text.length() == characters.size();
+	}
+	
+	public static void urlify(char[] input) {
+		
+		if(input.length <= 0) {
+			return;
+		}
+		
+		int index = input.length - 1;
+		while(input[index] == ' ' && index > 0) {
+			index--;
+		}
+		
+		if(index <= 0) {
+			return;
+		}
+		
+		int stringEnd = input.length - 1;
+		while(index > 0) {
+			int endIndex = index;
+			while(input[index] != ' ') {
+				index--;
+				
+				if(index < 0) {
+					return;
+				}
+			}
+			
+			for(int replaceIndex = endIndex; replaceIndex > index; replaceIndex--) {
+				input[stringEnd] = input[replaceIndex];
+				stringEnd--;
+			}
+			
+			input[index] = '%';
+			input[index + 1] = '2';
+			input[index + 2] = '0';
+		}
+		
+		
+		
+	}
 	
 	public static boolean palindromePermutation(String input) {
 		Map<Character, Integer> counts = new HashMap<>();
@@ -139,5 +190,25 @@ public class CrackingTheCodingInterview {
 		}
 		
 		return stack.peek();
+	}
+
+	public static String stringCompression(String input) {
+		StringBuilder builder = new StringBuilder();
+		
+		for(int index = 0; index < input.length(); index++) {
+			char current = input.charAt(index);
+			int offset = 1;
+			while(index + offset < input.length()
+					&& input.charAt(index + offset) == current) {
+				offset++;
+			}
+			
+			builder.append(current);
+			builder.append(offset);
+		}
+		
+		return builder.length() < input.length()
+				? builder.toString()
+				: input;
 	}
 }
