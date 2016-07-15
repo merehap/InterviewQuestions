@@ -211,4 +211,19 @@ public class CrackingTheCodingInterview {
 				? builder.toString()
 				: input;
 	}
+	
+	public static void rotateImage(int[][] image) {
+		
+		for(int i = 0; i <= image.length / 2; i++) {
+			for(int j = 0; j <= image.length / 2; j++) {
+				int temp = image[i][j];
+				image[i][j] = image[j][image.length - i - 1];
+				image[j][image.length - i - 1] =
+						image[image.length - i - 1][image.length - j - 1];
+				image[image.length - i - 1][image.length - j - 1] =
+						image[image.length - j - 1][i];
+				image[image.length - j - 1][i] = temp;
+			}
+		}
+	}
 }
