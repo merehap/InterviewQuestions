@@ -256,4 +256,38 @@ public class CrackingTheCodingInterview {
 			}
 		}
 	}
+	
+	public static class MinStack {
+		
+		private final Stack<Integer> stack;
+		private final LinkedList<Integer> minList;
+		
+		public MinStack() {
+			this.stack = new Stack<>();
+			this.minList = new LinkedList<>();
+		}
+		
+		public void push(int value) {
+			this.stack.add(value);
+			if(this.minList.isEmpty() || value <= this.minList.peek()) {
+				this.minList.addFirst(value);
+			}
+		}
+		
+		public int pop() {
+			if(this.stack.isEmpty()) {
+				throw new RuntimeException("Stack is empty.");
+			}
+			
+			if(this.stack.peek() == this.minList.getFirst()) {
+				this.minList.removeFirst();
+			}
+			
+			return this.stack.pop();
+		}
+		
+		public int min() {
+			return this.minList.getFirst();
+		}
+	}
 }
