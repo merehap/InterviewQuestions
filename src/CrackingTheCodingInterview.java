@@ -226,4 +226,34 @@ public class CrackingTheCodingInterview {
 			}
 		}
 	}
+	
+	public static void zeroMatrix(int[][] matrix) {
+		Set<Integer> zeroedRows = new HashSet<>();
+		Set<Integer> zeroedColumns = new HashSet<>();
+		
+		for(int row = 0; row < matrix.length; row++) {
+			if(zeroedRows.contains(row)) {
+				continue;
+			}
+			
+			for(int col = 0; col < matrix[0].length; col++) {
+				if(zeroedColumns.contains(col)) {
+					continue;
+				}
+				
+				if(matrix[col][row] == 0) {
+					zeroedColumns.add(col);
+					zeroedRows.add(row);
+					
+					for(int zeroRow = 0; zeroRow < matrix.length; zeroRow++) {
+						matrix[col][zeroRow] = 0;
+					}
+					
+					for(int zeroCol = 0; zeroCol < matrix.length; zeroCol++) {
+						matrix[zeroCol][row] = 0;
+					}
+				}
+			}
+		}
+	}
 }
