@@ -173,10 +173,50 @@ public class CrackingTheCodingInterview {
 		}
 	}
 	
-	public static List<Node> routeBetweenNodes(Node node0, Node node1) {
+	public static boolean routeBetweenNodes(Node node0, Node node1) {
+		node0.visited = true;
+		Set<String> node0VisitedNames = new HashSet<>();
+		node0VisitedNames.add(node0.name);
 		
+		node1.visited = true;
+		Set<String> node1VisitedNames = new HashSet<>();
+		node1VisitedNames.add(node1.name);
 		
-		return null;
+		Queue<Node> nodesToProcess0 = new LinkedList<>();
+		nodesToProcess0.add(node0);
+		Queue<Node> nodesToProcess1 = new LinkedList<>();
+		nodesToProcess1.add(node1);
+		
+		while(!nodesToProcess0.isEmpty() && !nodesToProcess1.isEmpty()) {
+			Node current0 = nodesToProcess0.poll();
+			Node current1 = nodesToProcess1.poll();
+			
+			for(Node neighbor0 : current0.neighbors) {
+				if(neighbor0.visited) {
+					if(node0VisitedNames.contains(neighbor0.name)) {
+						return true;
+					}
+				} else {
+					neighbor0.visited = true;
+					node0VisitedNames.add(neighbor0.name);
+					nodesToProcess0.add(neighbor0);
+				}
+			}
+			
+			for(Node neighbor1 : current1.neighbors) {
+				if(neighbor1.visited) {
+					if(node1VisitedNames.contains(neighbor1.name)) {
+						return true;
+					}
+				} else {
+					neighbor1.visited = true;
+					node1VisitedNames.add(neighbor1.name);
+					nodesToProcess1.add(neighbor1);
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	public static <T> T getKthFromLast(LinkedList<T> input, int k) {
