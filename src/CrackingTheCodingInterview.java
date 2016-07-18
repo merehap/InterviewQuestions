@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -328,6 +329,45 @@ public class CrackingTheCodingInterview {
 		
 		public int min() {
 			return this.minList.getFirst();
+		}
+	}
+	
+	public static class Tree {
+		
+		private Tree leftTree;
+		private int value;
+		private Tree rightTree;
+		
+		public Tree() {
+			
+		}
+		
+		public List<LinkedList<Tree>> getLevels() {
+			List<LinkedList<Tree>> levels = new ArrayList<>();
+			
+			LinkedList<Tree> currentLevel = new LinkedList<>();
+			currentLevel.add(this);
+			levels.add(currentLevel);
+			
+			while(!currentLevel.isEmpty()) {
+
+				LinkedList<Tree> previousLevel = currentLevel;
+				currentLevel = new LinkedList<>();
+				
+				for(Tree tree : previousLevel) {
+					if(tree.leftTree != null) {
+						currentLevel.add(tree.leftTree);
+					}
+					
+					if(tree.rightTree != null) {
+						currentLevel.add(tree.rightTree);
+					}	
+				}
+				
+				levels.add(currentLevel);
+			}
+			
+			return levels;
 		}
 	}
 }
