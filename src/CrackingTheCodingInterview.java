@@ -370,4 +370,52 @@ public class CrackingTheCodingInterview {
 			return levels;
 		}
 	}
+	
+	public static List<String> buildOrder(
+			Set<String> projects, List<Dependency> dependencies) {
+		
+		Map<String, Set<String>> dependencyMap = new HashMap<>();
+		for(String project : projects) {
+			dependencyMap.put(project, new HashSet<String>());
+		}
+		
+		for(Dependency dependency : dependencies) {
+			if(!dependencyMap.containsKey(dependency.child)) {
+				throw new IllegalArgumentException(
+						"Dependency has no corresponding project.");
+			}
+			
+			dependencyMap.get(dependency.child).add(dependency.parent);
+		}
+		
+		List<String> buildOrder = new ArrayList<>();
+		
+		while(dependencyMap.size() > 0) {
+			final int initialSize = dependencyMap.size();
+			for(Entry<String, Set<String>> entry : dependencyMap.entrySet()) {
+				entry.getValue().removeAll(buildOrder);
+				if(entry.getValue().isEmpty()) {
+					buildOrder.add(entry.getKey());
+					dependencyMap.remove(entry.getKey());
+				}
+			}
+			
+			if(initialSize == dependencyMap.size()) {
+				throw new IllegalArgumentException("Cycle detected!");
+			}
+		}
+		
+		return buildOrder;
+	}
+	
+	public static class Dependency {
+		
+		private final String parent;
+		private final String child;
+		
+		public Dependency(String parent, String child) {
+			this.parent = parent;
+			this.child = child;
+		}
+	}
 }
