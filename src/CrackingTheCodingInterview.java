@@ -418,4 +418,125 @@ public class CrackingTheCodingInterview {
 			this.child = child;
 		}
 	}
+	
+	
+	public static class CallCenter {
+		
+		private final Queue<Respondent> availableRespondents;
+		
+		public CallCenter(final Queue<Respondent> availableRespondents) {
+			this.availableRespondents = availableRespondents;
+		}
+		
+		public void dispatchCall(final Call call) {
+			
+			if(this.availableRespondents.isEmpty()) {
+				call.playHoldMusic();
+			}
+			
+			while(!this.availableRespondents.isEmpty()) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			call.endHoldMusic();
+			
+			final Respondent respondent = this.availableRespondents.poll();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					respondent.handleCall(call);
+					CallCenter.this.availableRespondents.add(respondent);
+				}
+			};
+			
+			runnable.run();
+			Thread thread = new Thread(runnable);
+			thread.run();
+		}
+	}
+	
+	public static abstract class Employee {
+		private final Employee supervisor;
+		
+		public Employee(final Employee supervisor) {
+			this.supervisor = supervisor;
+		}
+		
+		public CallStatus handleCall(Call call) {
+			
+			CallStatus callStatus;
+			while((callStatus = this.pollCallStatus()) == null) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return callStatus;
+		}
+		
+		private CallStatus pollCallStatus() {
+			return CallStatus.SUCCESS;
+		}
+		
+		public Employee getSupervisor() {
+			return this.supervisor;
+		}
+	}
+	
+	public static class Respondent extends Employee {
+
+		public Respondent(Manager supervisor) {
+			super(supervisor);
+		}
+		
+	}
+	
+	public static class Manager extends Employee {
+
+		public Manager(Director supervisor) {
+			super(supervisor);
+		}
+		
+	}
+	
+	public static class Director extends Employee {
+
+		public Director() {
+			super(null);
+		}
+		
+	}
+	
+	public static class Customer {
+		
+	}
+	
+	public static class Call {
+		
+		public void playHoldMusic() {
+			
+		}
+		
+		public void endHoldMusic() {
+			
+		}
+		
+		public void close() {
+			
+		}
+	}
+	
+	public static enum CallStatus {
+		ESCALATE,
+		SUCCESS,
+	}
+	
+	
 }
