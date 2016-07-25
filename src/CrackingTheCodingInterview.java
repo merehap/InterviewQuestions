@@ -643,4 +643,25 @@ public class CrackingTheCodingInterview {
 		
 		return result;
 	}
+	
+	public static LinkedList<Integer> partition(LinkedList<Integer> list, int value) {
+		LinkedList<Integer> before = new LinkedList<Integer>();
+		LinkedList<Integer> equal = new LinkedList<Integer>();
+		LinkedList<Integer> after = new LinkedList<Integer>();
+		
+		for(Integer i : list) {
+			if(i < value) {
+				before.add(i);
+			} else if (i > value) {
+				after.add(i);
+			} else {
+				equal.add(i);
+			}
+		}
+		
+		before.addAll(equal);
+		before.addAll(after);
+		
+		return before;
+	}
 }
