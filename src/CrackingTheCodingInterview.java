@@ -537,4 +537,35 @@ public class CrackingTheCodingInterview {
 		ESCALATE,
 		SUCCESS,
 	}
+	
+	public static int tripleStep(int steps) {
+		return tripleStep(steps, new HashMap<Integer, Integer>());
+		
+	}
+	
+	private static int tripleStep(int steps, Map<Integer, Integer> cache) {
+		if(steps < 0) {
+			throw new IllegalArgumentException("Steps must not be negative.");
+		}
+		
+		if(steps <= 2) {
+			return steps;
+		}
+		
+		if(steps == 3) {
+			return 4;
+		}
+		
+		final Integer cachedValue = cache.get(steps);
+		if(cachedValue != null) {
+			return cachedValue;
+		}
+		
+		final int result =
+				tripleStep(steps - 1) + tripleStep(steps - 2) + tripleStep(steps - 3);
+		
+		cache.put(steps, result);
+		
+		return result;
+	}
 }
