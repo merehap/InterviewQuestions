@@ -568,4 +568,55 @@ public class CrackingTheCodingInterview {
 		
 		return result;
 	}
+	
+	public static List<Direction> robotInAGrid(Terrain[][] grid) {
+		return robotInAGrid(grid, new ArrayList<Direction>(), 0, 0);
+	}
+	
+	private static List<Direction> robotInAGrid(
+			Terrain[][] grid, List<Direction> directions, int x, int y) {
+		
+		if(x == 0 && y == 0) {
+			return directions;
+		}
+		
+		if((!isInBounds(grid, x - 1, y) || grid[x-1][y] == Terrain.BLOCKED)
+				&& (!isInBounds(grid, x, y - 1) || grid[x][y-1] == Terrain.BLOCKED))) {
+			return null;
+		}
+		
+		if(isInBounds(grid, x - 1, y)) {
+			List<Direction> newDirections = new ArrayList<>(directions);
+			newDirections.add(Direction.RIGHT);
+			List<Direction> fullDirections = robotInAGrid(grid, newDirections, x - 1, y);
+			if(fullDirections != null) {
+				return fullDirections;
+			}
+		}
+		
+		if(isInBounds(grid, x, y - 1)) {
+			List<Direction> newDirections = new ArrayList<>(directions);
+			newDirections.add(Direction.DOWN);
+			List<Direction> fullDirections = robotInAGrid(grid, newDirections, x - 1, y);
+			if(fullDirections != null) {
+				return fullDirections;
+			}
+		}
+		
+		return null;
+	}
+	
+	private static boolean isInBounds(Terrain[][] grid, int x, int y) {
+		return x < grid.length && y < grid[0].length; 
+	}
+	
+	public static enum Direction {
+		RIGHT,
+		DOWN,
+	}
+	
+	public static enum Terrain {
+		OPEN,
+		BLOCKED,
+	}
 }
