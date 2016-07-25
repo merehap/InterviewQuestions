@@ -619,4 +619,28 @@ public class CrackingTheCodingInterview {
 		OPEN,
 		BLOCKED,
 	}
+	
+	public static int coins(int cents) {
+		return coins(cents, new int[cents]);
+	}
+	
+	private static int coins(int cents, int[] cache) {
+		if(cents < 0) {
+			return 0;
+		}
+		
+		if(cents == 0) {
+			return 1;
+		}
+		
+		if(cache[cents] != 0) {
+			return cache[cents];
+		}
+		
+		final int result = coins(cents - 1) + coins(cents - 5) + coins(cents - 10) + coins(cents - 25);
+		
+		cache[cents] = result;
+		
+		return result;
+	}
 }
