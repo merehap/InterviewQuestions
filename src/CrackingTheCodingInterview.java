@@ -581,7 +581,7 @@ public class CrackingTheCodingInterview {
 		}
 		
 		if((!isInBounds(grid, x - 1, y) || grid[x-1][y] == Terrain.BLOCKED)
-				&& (!isInBounds(grid, x, y - 1) || grid[x][y-1] == Terrain.BLOCKED))) {
+				&& (!isInBounds(grid, x, y - 1) || grid[x][y-1] == Terrain.BLOCKED)) {
 			return null;
 		}
 		
@@ -663,5 +663,21 @@ public class CrackingTheCodingInterview {
 		before.addAll(after);
 		
 		return before;
+	}
+	
+	public static boolean isBinarySearchTree(Tree tree) {
+		if(tree == null || (tree.leftTree == null && tree.rightTree == null)) {
+			return true;
+		}
+		
+		if(tree.leftTree != null && tree.leftTree.value > tree.value) {
+			return false;
+		}
+		
+		if(tree.rightTree != null && tree.rightTree.value < tree.value) {
+			return false;
+		}
+		
+		return isBinarySearchTree(tree.leftTree) && isBinarySearchTree(tree.rightTree);
 	}
 }
