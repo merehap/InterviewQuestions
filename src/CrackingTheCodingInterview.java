@@ -680,4 +680,36 @@ public class CrackingTheCodingInterview {
 		
 		return isBinarySearchTree(tree.leftTree) && isBinarySearchTree(tree.rightTree);
 	}
+	
+	public static class Box {
+		private int width;
+		private int length;
+		private int height;
+		
+		public boolean fitsOnTopOf(Box target) {
+			return this.width < target.width && this.length < target.length;
+		}
+	}
+	
+	public static int stackOfBoxes(List<Box> boxes, int start, int end) {
+		if(end - start == 0) {
+			return 0;
+		}
+		
+		if(end - start == 1) {
+			return boxes.get(0).height;
+		}
+		
+		if(end - start == 2) {
+			Box box0 = boxes.get(0);
+			Box box1 = boxes.get(1);
+			if(box0.fitsOnTopOf(box1) || box1.fitsOnTopOf(box0)) {
+				return box0.height + box1.height;
+			}
+			
+			return Math.max(box0.height, box1.height);
+		}
+		
+		return stackOfBoxes(boxes, start + 1, end);
+	}
 }
