@@ -100,4 +100,22 @@ public class DynamicProgramming {
 		}
 	}
 	
+	public static List<String> permutations(
+			String fullPrefix, List<Character> suffix) {
+		
+		List<String> result = new ArrayList<>();
+		if(suffix.size() == 0) {
+			result.add(fullPrefix);
+			return result;
+		}
+		
+		for(int index = 0; index < suffix.size(); index++) {
+			List<Character> current = new ArrayList<>(suffix);
+			char prefix = current.remove(index);
+			result.addAll(permutations(fullPrefix + prefix, current));
+		}
+		
+		return result;
+	}
+	
 }
