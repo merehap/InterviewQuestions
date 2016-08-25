@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class DynamicProgramming {
@@ -113,6 +115,27 @@ public class DynamicProgramming {
 			List<Character> current = new ArrayList<>(suffix);
 			char prefix = current.remove(index);
 			result.addAll(permutations(fullPrefix + prefix, current));
+		}
+		
+		return result;
+	}
+	
+//	Parens: Implement an algorithm to print all valid (e.g., properly opened and closed) combinations
+//	of n pairs of parentheses.
+	public static Set<String> parenPairs(int count) {
+
+		Set<String> result = new HashSet<>();
+		if(count == 1) {
+			result.add("()");
+			return result;
+		}
+		
+		Set<String> childSolutions = parenPairs(count - 1);
+		
+		for(String childSolution : childSolutions) {
+			result.add("()" + childSolution);
+			result.add(childSolution + "()");
+			result.add("(" + childSolution + ")");
 		}
 		
 		return result;
